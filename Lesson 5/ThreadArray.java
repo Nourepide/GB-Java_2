@@ -7,12 +7,10 @@ class ThreadArray {
 
     }
 
-    private float[] handling(float[] array) {
+    private void handling(float[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] = (float) (array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
         }
-
-        return array;
     }
 
     private void printTime(long time) {
@@ -43,15 +41,9 @@ class ThreadArray {
         System.arraycopy(array, 0, array1, 0, HALF_SIZE);
         System.arraycopy(array, HALF_SIZE, array2, 0, HALF_SIZE);
 
-        Thread thread1 = new Thread(() -> {
-            float[] arr = handling(array1);
-            System.arraycopy(arr, 0, array1, 0, array1.length);
-        });
+        Thread thread1 = new Thread(() -> handling(array1));
 
-        Thread thread2 = new Thread(() -> {
-            float[] arr = handling(array2);
-            System.arraycopy(arr, 0, array2, 0, array2.length);
-        });
+        Thread thread2 = new Thread(() -> handling(array2));
 
         thread1.start();
         thread2.start();
